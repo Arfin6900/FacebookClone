@@ -7,7 +7,8 @@ import IconI from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 const StoryChild = ({item, onPress}) => {
   let Story = item?.stories[0];
-  const navigation =useNavigation()
+const navigation =useNavigation()
+
   //<====================Other Users Stories=====================>
   const OtherUsersStories = () => {
     return (
@@ -15,8 +16,10 @@ const StoryChild = ({item, onPress}) => {
         {Story?.text ? (
           <Text
             style={{
-              fontSize: Screensize.Fontsize - 20,
-              color: Colors.themColorWhite,
+               textAlign:"center",
+               lineHeight:25,
+               fontSize: Screensize.Fontsize - 20,
+               color: Colors.themColorWhite,
             }}>
             {item.stories[0].text}
           </Text>
@@ -28,64 +31,62 @@ const StoryChild = ({item, onPress}) => {
 
   // <====================User Story=============================>
 
-  const UserStories = () => {
-    return (
-      <>
-        {Story?.text ? (
-          <Text
-            style={{
-              fontSize: Screensize.Fontsize - 20,
-              color: Colors.themColorWhite,
-            }}>
-            {item.stories[0].text}
-          </Text>
-        ) : null}
-        {Story?.pic ? <Image resizeMode="cover" source={Story?.pic} /> : null}
-        {!item.stories.length ? (
-          <>
-            <Image
-              style={styles.StoryImage}
-              resizeMode="cover"
-              source={User.profilepic}
-            />
-            <View style={styles.CreateStoryView}>
-              <IconI
-                name="add-circle"
-                size={Screensize.Fontsize}
-                color={Colors.themColorWhite}
-              />
-              <Text
-                style={{
-                  fontSize: Screensize.Fontsize - 20,
-                  color: Colors.themColorWhite,
-                  alignSelf: 'center',
-                  fontWeight: 'bold',
-                }}>
-                Create Story
-              </Text>
-            </View>
-          </>
-        ) : null}
-      </>
-    );
-  };
-  const CreateStoryHandler=()=>{
-    navigation.navigate('CreateStory')
-  }
   return (
+    <>
+    {item?.stories?.length?
     <TouchableOpacity
       style={[
         styles.container,
-        {padding: item.id == 0 ? 0 : Screensize.Fontsize - 30},
+        {padding:  Screensize.Fontsize - 30},
       ]}
-      onPress={item.id==0?CreateStoryHandler:onPress}>
-      {item.id == 0 ? null : (
+      onPress={onPress}>
         <Image source={item.profilepic} style={styles.profilepic} />
-      )}
-      {item.id == 0 ? <UserStories /> : <OtherUsersStories />}
+      <OtherUsersStories />
 
-      {item.id == 0 ? null : <Text style={styles.username}>{item.name}</Text>}
+     <Text style={styles.username}>{item.name}</Text>
     </TouchableOpacity>
+    :null}
+    </>
+  );
+};
+
+export const CreateStories = ({item2,onPress,navigation}) => {
+  return (
+    <>
+        <TouchableOpacity
+    style={[
+      styles.container,
+      {padding:  0,top:Screensize.Fontsize-29},
+    ]}
+    onPress={onPress}>
+    
+    
+        <>
+          <Image
+            style={styles.StoryImage}
+            resizeMode="cover"
+            source={User.profilepic}
+          />
+          <View style={styles.CreateStoryView}>
+            <IconI
+              name="add-circle"
+              size={Screensize.Fontsize}
+              color={Colors.themColorWhite}
+            />
+            <Text
+              style={{
+                fontSize: Screensize.Fontsize - 20,
+                color: Colors.themColorWhite,
+                alignSelf: 'center',
+                fontWeight: 'bold',
+              }}>
+              Create Story
+            </Text>
+          </View>
+        </>
+      
+      </TouchableOpacity>
+    </>
   );
 };
 

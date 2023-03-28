@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import React from 'react';
 import DummyData from '../../Constants/Dummy_story_data';
-import StoryChild from './StoryChild';
+import StoryChild, { CreateStories } from './StoryChild';
 import Colors from '../../Constants/Colors';
 import Screensize from '../../Constants/Screensize';
 import { useNavigation } from '@react-navigation/native';
@@ -16,15 +16,10 @@ const Stories = () => {
   return (
     <View style={styles.container}>
       <FlatList
+      ListHeaderComponent={<CreateStories item2={DummyData[0]} onPress={()=>{navigation.navigate("CreateStory")}} navigation={navigation}/>}
       showsHorizontalScrollIndicator={false}
         horizontal
-        data={[{
-          Text:"hello world",
-          id:0,
-          name:"You",
-          profilepic:User.profilepic,
-          stories:[   ]
-       },...DummyData]}
+        data={DummyData}
         keyExtractor={item => item.id}
         renderItem={({item}) => <StoryChild item={item} onPress={()=>{storyOpenHandler(item)}}/>}
       />

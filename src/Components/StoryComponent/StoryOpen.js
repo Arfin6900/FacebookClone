@@ -84,10 +84,15 @@ const StoryOpen = ({route}) => {
           </View>
         ))}
       </View>
+
+      
       <View style={styles.StoryTopDiv}>
         <View style={{flexDirection: 'row'}}>
           <Image source={item.profilepic} style={styles.profilepic} />
+          <View>
           <Text style={styles.username}>{item?.name}</Text>
+          <Text >{item?.stories[currentStory]?.time}</Text>
+          </View>        
         </View>
         <View style={styles.Iconsdiv}>
           <IconE
@@ -105,6 +110,11 @@ const StoryOpen = ({route}) => {
           />
         </View>
       </View>
+
+
+
+
+
       <View style={styles.storyBody}>
         <View style={styles.controlsDiv}>
         <TouchableOpacity onPress={rightHandler} style={styles.rightControl}></TouchableOpacity>
@@ -157,7 +167,7 @@ const styles = StyleSheet.create({
   },
   username: {
     color: Colors.themColorWhite,
-    alignSelf: 'center',
+    // alignSelf: 'center',
     left: Screensize.Fontsize - 27,
     fontWeight: 'bold',
     fontSize: Screensize.Fontsize - 18,

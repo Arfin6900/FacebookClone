@@ -1,13 +1,17 @@
-import { StyleSheet, Text, View,Image,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View,Image,TouchableOpacity,ScrollView } from 'react-native'
 import React from 'react'
 import Stories from '../../Components/StoryComponent/Stories'
 import Colors from '../../Constants/Colors'
 import Screensize from '../../Constants/Screensize'
 import User from '../../Constants/UserData'
 import IconF from "react-native-vector-icons/FontAwesome5"
+import DummyData from '../../Constants/Dummy_story_data'
+import Posts from '../../Components/PostsComponent/Posts'
+import PostFlatList from '../../Components/PostsComponent/PostFlatList'
 const Home = () => {
+  console.log("Dummy data",DummyData)
   return (
-    <View style={{backgroundColor:Colors.black,flex:1}}>
+    <ScrollView style={{backgroundColor:Colors.black,flex:1}}>
       <View style={styles.createPostView}>
         <Image source={User.profilepic} style={styles.profilepic}/>
         <TouchableOpacity style={styles.whatsonyourmind}>
@@ -16,7 +20,9 @@ const Home = () => {
         <IconF name={"photo-video"} size={Screensize.Fontsize-13} color={"#8fce00"}/>
       </View>
         <Stories/>
-    </View>
+        <PostFlatList />
+       
+    </ScrollView>
   )
 }
 

@@ -14,17 +14,40 @@ import User from '../../Constants/UserData';
 import IconE from 'react-native-vector-icons/Entypo';
 import IconF from 'react-native-vector-icons/FontAwesome5';
 import ImageCropPicker from 'react-native-image-crop-picker';
+import Video from "react-native-video"
+import DummyData from "../../Constants/Dummy_story_data"
+import time from './TimeAtNow';
 const CreateStory = () => {
   const navigation = useNavigation();
-  const [media,setMedia]=useState()
+  const [StoryData,setStoryData]=useState()
+  // +========================SelectMediaHandler===============>
   const SelectMediaHandler=()=>{
-    ImageCropPicker.openPicker({
   
-        cropping: true
+    ImageCropPicker.openPicker({
+        mediaType:"any",
+        // cropping: true
       }).then(image => {
         console.log(image);
-        setMedia({image:image.path,})
+        if(image.mime=="image/jpeg"){
+        setStoryData({image:image.path,})
+        }else{
+          setStoryData({
+            video:image.path
+          })
+        }
       });
+      
+  }
+
+  // ========================AddStoryHandler====================>
+
+
+  const AddStoryHandler=()=>{
+    DummyData[0].stories.push({
+      ...StoryData,
+     time:time
+    })
+    navigation.navigate("TopTabs")
   }
   return (
     <View style={{flex: 1, backgroundColor: Colors.themColorBlack}}>
@@ -42,7 +65,10 @@ const CreateStory = () => {
           color={Colors.themColorWhite}
           style={{left: 10, top: 10}}
         />
-        <TouchableOpacity style={[styles.Done,{top:10,right:10}]}>
+        <TouchableOpacity 
+         onPress={AddStoryHandler}
+        style={[styles.Done,{top:10,right:10}]}
+        >
           <Text style={styles.DoneText}>Done</Text>
         </TouchableOpacity>
       </View>
@@ -52,8 +78,12 @@ const CreateStory = () => {
 
 
       <View style={styles.contentsBody}>
-       {!media?.image&&!media?.video?
+       {!StoryData?.image&&!StoryData?.video?
        <TextInput
+       onChangeText={(e)=>{
+        setStoryData({text:e})
+       }}
+       value={StoryData?.text}
           placeholder="Start Typing"
           placeholderTextColor={'grey'}
           style={{
@@ -63,7 +93,11 @@ const CreateStory = () => {
           multiline
         />:null}
         {
-            media?.image?<Image resizeMode='contain' source={{uri:media?.image}} style={{height:Screensize.height/1.4,width:Screensize.width}}/>
+            StoryData?.image?<Image resizeMode='contain' source={{uri:StoryData?.image}} style={{height:Screensize.height/1.4,width:Screensize.width}}/>
+            :null
+        }
+         {
+            StoryData?.video?<Video loop resizeMode='contain' source={{uri:StoryData?.video}} style={{height:Screensize.height/1.4,width:Screensize.width}}/>
             :null
         }
       </View>
